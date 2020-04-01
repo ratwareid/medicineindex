@@ -1,0 +1,108 @@
+﻿<div class="card mt-4">
+    <h4 class="card-header">You're logged in Mercubuana Medical Center.</h4>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-12">
+            <div class="jumbotron">
+                <h2>
+                    Aplikasi Pencarian Obat Berdasarkan Gejala
+                </h2>
+                <p>
+                    Masukan gejala yang dialami pasien untuk menemukan berbagai obat yang memiliki khasiat dalam menyembuhkan gejala tersebut.
+                </p>
+                <br><br>
+                <form class="form-inline">
+                    <input class="form-control col-sm-10" type="text"> 
+                    <button class="btn btn-primary col-sm-2" type="submit">
+                        Search
+                    </button>
+                </form>
+            </div>
+            <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Nama Obat
+                        </th>
+                        <th>
+                            Gejala
+                        </th>
+                        <th>
+                            Deskripsi
+                        </th>
+                        <th>
+                            Aturan Pakai
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="medicines">
+                    <tr *ngFor="let medicine of medicines">
+                        <td>
+							<a id="modal-1" href="#modal-container-1" data-toggle="modal">{{medicine.name}}</a>
+							<div class="modal fade" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="myModalLabel">
+												{{medicine.name}}
+											</h5> 
+											<button type="button" class="close" data-dismiss="modal">
+												<span aria-hidden="true">×</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											Detail Dari Obat Ini.....
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">
+												Close
+											</button>
+										</div>
+									</div>	
+								</div>	
+							</div>
+						</td>
+                        <td>
+                            <span>{{medicine.disease}}</span>
+                        </td>
+                        <td>
+                            <span>{{medicine.description}}</span>
+                        </td>
+                        <td>
+                            <span>{{medicine.rulesofuse}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+            <br><br> 
+        </div>
+    </div>
+</div>
