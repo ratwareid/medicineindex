@@ -1,26 +1,16 @@
 package com.ratwareid.spring.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class LogRegRequest {
+public class RegisterRequest {
 
-    @JsonProperty("UserName")
+    @JsonProperty("username")
     private String UserName;
-    @JsonProperty("Password")
+    @JsonProperty("password")
     private String Password;
-    @JsonProperty("Email")
-    private String Email;
-    @JsonProperty("FirstName")
+    @JsonProperty("firstname")
     private String FirstName;
-    @JsonProperty("LastName")
+    @JsonProperty("lastname")
     private String LastName;
 
     public String getUserName() {
@@ -39,14 +29,6 @@ public class LogRegRequest {
         Password = password;
     }
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
     public String getFirstName() {
         return FirstName;
     }
@@ -62,4 +44,5 @@ public class LogRegRequest {
     public void setLastName(String lastName) {
         LastName = lastName;
     }
+
 }

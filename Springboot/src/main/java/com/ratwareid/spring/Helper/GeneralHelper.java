@@ -5,6 +5,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class GeneralHelper {
 
+    public static String fakeToken = "ad1h89hda9hd19y2Gdma0e91dksdbduqd8h912h";
+
     public static String generateRandomString(String words) throws NoSuchAlgorithmException {
         String salt = "sadwa81hidasd0j2dajkshda20udjjksda";
         String tmsp = String.valueOf(System.currentTimeMillis());

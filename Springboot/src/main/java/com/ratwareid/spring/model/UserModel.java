@@ -19,13 +19,12 @@ public class UserModel {
     @Id
     @GeneratedValue
     private int userid;
-    private String username,password,email,firstname,lastname;
+    private String username,password,firstname,lastname;
 
 
-    public UserModel(String username,String password,String email,String firstname,String lastname){
+    public UserModel(String username,String password ,String firstname,String lastname){
         this.username = username;
         this.password = password;
-        this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -52,14 +51,6 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFirstname() {
