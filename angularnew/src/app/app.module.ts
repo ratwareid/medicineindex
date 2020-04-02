@@ -14,7 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { RegisterComponent } from './register/register.component';
 import { DataComponent } from './data/data.component';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { DataComponent } from './data/data.component';
     ReactiveFormsModule,
     HttpClientModule,
     appRoutingModule,
-    MatSliderModule
+    MatSliderModule,
+    NgxPaginationModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -13,4 +13,12 @@ export class MedicineService {
   getAll() {
     return this.http.get<Medicine[]>(`${environment.apiUrl}/api/medicine`);
   }
+
+  insert(medicine: Medicine) {
+    return this.http.post(`${environment.apiUrl}/api/medicine`, medicine);
+  }
+
+  search(query : String) {
+    return this.http.get<Medicine[]>(`${environment.apiUrl}/api/identified/`+query);
+  }
 }
