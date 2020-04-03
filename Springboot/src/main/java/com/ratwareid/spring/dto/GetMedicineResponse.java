@@ -2,6 +2,8 @@ package com.ratwareid.spring.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.math.BigDecimal;
+
 public class GetMedicineResponse extends GeneralResponse {
 
     @JsonProperty("medicineid")
@@ -18,6 +20,9 @@ public class GetMedicineResponse extends GeneralResponse {
 
     @JsonProperty("rulesofuse")
     private String rulesofuse;
+
+    @JsonProperty("acurate")
+    private BigDecimal acurate;
 
     public int getMedicineid() {
         return medicineid;
@@ -57,5 +62,13 @@ public class GetMedicineResponse extends GeneralResponse {
 
     public void setRulesofuse(String rulesofuse) {
         this.rulesofuse = rulesofuse;
+    }
+
+    public BigDecimal getAcurate() {
+        return acurate;
+    }
+
+    public void setAcurate(BigDecimal acurate) {
+        this.acurate = acurate;
     }
 }

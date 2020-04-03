@@ -8,8 +8,9 @@ import com.ratwareid.spring.repository.MedicineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -65,19 +66,54 @@ public class MedicineController {
         if (q.equals("")) return getAllMedicine();
 
         String[] key = q.trim().split(",");
+        List<MedicineModel> collectdata = new ArrayList<>();
+
+        //Ambil semua data
         for (int x=0;x<key.length;x++){
-            List<MedicineModel> data = medicineRepository.findAllByDiseaseContains(key[x].toUpperCase());
-            for (Object a : data) {
-                MedicineModel us = (MedicineModel) a;
-                GetMedicineResponse rs = new GetMedicineResponse();
-                rs.setMedicineid(us.getMedicineid());
-                rs.setName(us.getName());
-                rs.setDisease(us.getDisease());
-                rs.setDescription(us.getDescription());
-                rs.setRulesofuse(us.getRulesofuse());
-                list.add(rs);
-            }
+            List<MedicineModel> data = medicineRepository.findAllIdentifiedDisease(key[x].toUpperCase());
+            collectdata.addAll(data);
         }
+
+        //Remove duplicate data
+        Set<MedicineModel> set = new HashSet<>(collectdata);
+        collectdata.clear();
+        collectdata.addAll(set);
+
+        //Masukkan ke List Response
+        for(Object a : collectdata){
+            MedicineModel us = (MedicineModel) a;
+
+            GetMedicineResponse rs = new GetMedicineResponse();
+            rs.setMedicineid(us.getMedicineid());
+            rs.setName(us.getName());
+            rs.setDisease(us.getDisease());
+            rs.setDescription(us.getDescription());
+            rs.setRulesofuse(us.getRulesofuse());
+            rs.setAcurate(BigDecimal.ZERO);
+
+            list.add(rs);
+        }
+
+        //Hitung persentase akurasi
+        for (Object b : list){
+            GetMedicineResponse medicine = (GetMedicineResponse) b;
+            String[] diseasemed = medicine.getDisease().trim().split(",");
+            BigDecimal totaldisease = new BigDecimal(diseasemed.length);
+            int totalpass = 0;
+
+            for (int c=0;c<diseasemed.length;c++){
+                for (int y=0;y<key.length;y++) {
+                    if (diseasemed[c].trim().equalsIgnoreCase(key[y].trim())){
+                        totalpass++;
+                    }
+                }
+            }
+            BigDecimal tp = new BigDecimal(totalpass);
+            BigDecimal acurate = tp.divide(totaldisease,2, RoundingMode.HALF_EVEN).multiply(new BigDecimal(100));
+            medicine.setAcurate(acurate);
+        }
+
+        //TODO :: Sorting dari acurasi terbesar
 
         return list;
     }
