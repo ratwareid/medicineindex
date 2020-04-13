@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers';
@@ -15,6 +15,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { RegisterComponent } from './register/register.component';
 import { DataComponent } from './data/data.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    Title,
     // provider used to create fake backend
     fakeBackendProvider
   ],

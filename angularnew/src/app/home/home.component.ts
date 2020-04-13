@@ -1,16 +1,18 @@
 ﻿import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { FormBuilder, FormGroup} from '@angular/forms';
-import { Medicine } from '../_models';
+import { Medicine, Sickness } from '../_models';
 import {AuthenticationService,MedicineService,AlertService } from '../_services';
 import { Router } from '@angular/router';
 import { getLocaleDateFormat } from '@angular/common';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
+    
     loading = false;
     submitted = false;
     medicines : Medicine[];
+    sickness : Sickness[];
     p;
     homeForm : FormGroup;
     
@@ -53,11 +55,27 @@ export class HomeComponent {
                     this.loading = false;
                 });
         }
+
+        if (this.homeForm.value.search !== ''){
+            this.medicineService.findsickness(this.homeForm.value.search)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.sickness = data;
+                    this.loading = false;
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
+        }else{
+            this.sickness = null;
+        }
     }
 
     getData(){
-        this.medicineService.getAll().pipe(first()).subscribe(medicines => {
-            this.medicines = medicines;
+        this.medicineService.getAll().pipe(first()).subscribe(medicine => {
+            this.medicines = medicine;
             this.loading = false;
         });
     }

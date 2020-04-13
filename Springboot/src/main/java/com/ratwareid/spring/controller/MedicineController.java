@@ -60,17 +60,17 @@ public class MedicineController {
         return response;
     }
 
-    @RequestMapping(value = "/api/identified/{query}")
+    @RequestMapping(value = "/api/findmedicine/{query}")
     public List<GetMedicineResponse> searchData(@PathVariable("query") String q){
         List<GetMedicineResponse> list = new ArrayList<>();
         if (q.equals("")) return getAllMedicine();
 
-        String[] key = q.trim().split(",");
+        String[] key = q.split(",");
         List<MedicineModel> collectdata = new ArrayList<>();
 
         //Ambil semua data
         for (int x=0;x<key.length;x++){
-            List<MedicineModel> data = medicineRepository.findAllIdentifiedDisease(key[x].toUpperCase());
+            List<MedicineModel> data = medicineRepository.findAllIdentifiedDisease(key[x].toUpperCase().trim());
             collectdata.addAll(data);
         }
 
@@ -97,7 +97,7 @@ public class MedicineController {
         //Hitung persentase akurasi
         for (Object b : list){
             GetMedicineResponse medicine = (GetMedicineResponse) b;
-            String[] diseasemed = medicine.getDisease().trim().split(",");
+            String[] diseasemed = medicine.getDisease().split(",");
             BigDecimal totaldisease = new BigDecimal(diseasemed.length);
             int totalpass = 0;
 
@@ -114,7 +114,32 @@ public class MedicineController {
         }
 
         //TODO :: Sorting dari acurasi terbesar
+        for (int e=0;e<list.size();e++){
+            for (int f=0;f<list.size()-1;f++){
+                GetMedicineResponse current = (GetMedicineResponse) list.get(f);
+                GetMedicineResponse next = (GetMedicineResponse) list.get(f+1);
+                if (current.getAcurate().compareTo(next.getAcurate()) < 0){
+                    list.set(f,next);
+                    list.set(f+1,current);
+                }
+            }
+        }
 
+        //TODO :: Sorting dari gejala terbanyak
+        for (int g=0;g<list.size();g++){
+            for (int h=0;h<list.size()-1;h++){
+                GetMedicineResponse current = (GetMedicineResponse) list.get(h);
+                GetMedicineResponse next = (GetMedicineResponse) list.get(h+1);
+                String[] dcur = current.getDisease().split(",");
+                String[] dnext = next.getDisease().split(",");
+                if (current.getAcurate().compareTo(next.getAcurate()) == 0){
+                    if (dcur.length < dnext.length){
+                        list.set(h,next);
+                        list.set(h+1,current);
+                    }
+                }
+            }
+        }
         return list;
     }
 

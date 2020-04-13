@@ -22,13 +22,8 @@
             </div>
             <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             <table class="table table-hover">
-                <h2 style="margin-left: 10px;">Hasil Pencarian 5 Teratas</h2>
-                    <button style="margin-left: 10px;" type="button" class="btn btn-primary">Demam 94%</button>
-                    <button style="margin-left: 10px;" type="button" class="btn btn-info">Masuk Angin 87%</button>
-                    <button style="margin-left: 10px;" type="button" class="btn btn-success">Kecapean 65%</button>
-                    <button style="margin-left: 10px;" type="button" class="btn btn-warning">Tifus 48%</button>
-                    <button style="margin-left: 10px;" type="button" class="btn btn-danger">Cacingan 39%</button>
-              
+                <h2 *ngIf="sickness != null" style="margin-left: 10px;">Hasil Pencarian 5 Teratas</h2>
+                    <button *ngFor="let sick of sickness" style="margin-left: 10px;" type="button" class="btn btn-primary">{{sick.name}} {{sick.acurate}}%</button>
             </table>
             <table class="table table-hover">
                 <thead>

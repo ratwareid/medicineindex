@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Medicine } from '../_models';
+import { Medicine,Sickness } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,10 @@ export class MedicineService {
   }
 
   search(query : String) {
-    return this.http.get<Medicine[]>(`${environment.apiUrl}/api/identified/`+query);
+    return this.http.get<Medicine[]>(`${environment.apiUrl}/api/findmedicine/`+query);
+  }
+
+  findsickness(query : String) {
+    return this.http.get<Sickness[]>(`${environment.apiUrl}/api/findsickness/`+query);
   }
 }
